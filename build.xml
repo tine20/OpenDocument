@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- ==================================================  -->
+<!-- Build Definition for OpenDocument                   -->
+<!--                                                     -->
+<!-- http://git.tine20.org/git?p=opendocument;a=summary  -->
+<!-- http://www.phing.info                               -->
+<!-- ==================================================  -->
+<project name="opendocument" description="OpenDocument build file" default="test">
+
+    <!-- ============================================  -->
+    <!-- Task: autoload                                -->
+    <!-- ============================================  -->
+    <adhoc-task name="autoload"><![CDATA[
+        class autoloadTask extends Task {
+            function main() {
+                require_once 'vendor/autoload.php';
+            }
+        }
+    ]]></adhoc-task>
+
+    <!-- ============================================  -->
+    <!-- Task: prepareComposer                         -->
+    <!-- ============================================  -->
+    <adhoc-task name="runComposer"><![CDATA[
+        class initTask extends Task {
+            function main() {
+                if (! file_exists('vendor')) {
+                    echo `composer install`;
+                } else {
+                    echo `composer update`;
+                }
+            }
+        }
+    ]]></adhoc-task>
+    
+    <!-- ============================================  -->
+    <!-- Task: runTests                                -->
+    <!-- ============================================  -->
+    <adhoc-task name="runTests"><![CDATA[
+            class runTest extends Task {
+                function main() {
+                    echo `
+                        cd tests
+                        phpunit --config phpunit.xml
+                    `;
+                }
+            }
+    ]]></adhoc-task>
+    
+    <!-- ============================================  -->
+    <!-- Target: test                                  -->
+    <!-- ============================================  -->
+    <target name="test">
+        <phingcall target="compose" />
+        <echo msg="Start testing" />
+        <runTests />
+    </target>
+
+    <!-- ============================================  -->
+    <!-- Target: test                                  -->
+    <!-- ============================================  -->
+    <target name="compose">
+        <echo msg="Preparing composer includes and autoload" />
+        <runComposer />
+    </target>
+    
+</project>

@@ -1,0 +1,10 @@
+<phpunit backupGlobals="false"
+    colors="true"
+    bootstrap="bootstrap.php">
+    
+    <testsuites>
+        <testsuite name="All Tests">
+            <file>OpenDocument/AllTests.php</file>
+        </testsuite>
+    </testsuites>
+</phpunit>
