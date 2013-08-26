@@ -41,12 +41,12 @@ class OpenDocument_DocumentTests extends PHPUnit_Framework_TestCase
         $row  = $table->appendRow();
         
         $row  = $table->appendRow();
-        $cell = $row->appendCell('<{MATRIX}>');
+        $cell = $row->appendCell('###MATRIX###');
         
         $row  = $table->appendRow();
         
         $row  = $table->appendRow();
-        $cell = $row->appendCell('<{MARKER}>');
+        $cell = $row->appendCell('###MARKER###');
         
         $tmpDir = sys_get_temp_dir();
         

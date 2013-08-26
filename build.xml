@@ -9,60 +9,19 @@
 <project name="opendocument" description="OpenDocument build file" default="test">
 
     <!-- ============================================  -->
-    <!-- Task: autoload                                -->
-    <!-- ============================================  -->
-    <adhoc-task name="autoload"><![CDATA[
-        class autoloadTask extends Task {
-            function main() {
-                require_once 'vendor/autoload.php';
-            }
-        }
-    ]]></adhoc-task>
-
-    <!-- ============================================  -->
-    <!-- Task: prepareComposer                         -->
-    <!-- ============================================  -->
-    <adhoc-task name="runComposer"><![CDATA[
-        class initTask extends Task {
-            function main() {
-                if (! file_exists('vendor')) {
-                    echo `composer install`;
-                } else {
-                    echo `composer update`;
-                }
-            }
-        }
-    ]]></adhoc-task>
-    
-    <!-- ============================================  -->
-    <!-- Task: runTests                                -->
-    <!-- ============================================  -->
-    <adhoc-task name="runTests"><![CDATA[
-            class runTest extends Task {
-                function main() {
-                    echo `
-                        cd tests
-                        phpunit --config phpunit.xml
-                    `;
-                }
-            }
-    ]]></adhoc-task>
-    
-    <!-- ============================================  -->
     <!-- Target: test                                  -->
     <!-- ============================================  -->
-    <target name="test">
-        <phingcall target="compose" />
-        <echo msg="Start testing" />
-        <runTests />
+    <target name="test" depends="compose">
+        <echo msg="Starting Tests" />
+        <exec command="phpunit --config phpunit.xml --log-junit junit_log_opendocument.xml" dir="tests" passthru="true" />
     </target>
 
     <!-- ============================================  -->
-    <!-- Target: test                                  -->
+    <!-- Target: compose                               -->
     <!-- ============================================  -->
     <target name="compose">
-        <echo msg="Preparing composer includes and autoload" />
-        <runComposer />
+        <echo msg="Fetching dependencies" />
+        <exec command="composer update" passthru="true" />
     </target>
     
 </project>
