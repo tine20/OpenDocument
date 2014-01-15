@@ -78,6 +78,19 @@ class OpenDocument_SpreadSheet_Table implements Iterator, Countable
     }
     
     /**
+     * add new column and return reference
+     *
+     * @param string|optional $_tableName
+     * @return OpenDocument_SpreadSheet_Row
+     */
+    public function appendColumn($_styleName = null)
+    {
+        $row = OpenDocument_SpreadSheet_Column::createColunm($this->_table, $_styleName);
+    
+        return $row;
+    }
+    
+    /**
      * creates a table
      * 
      * @param SimpleXMLElement $_parent
