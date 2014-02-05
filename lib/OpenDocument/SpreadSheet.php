@@ -203,7 +203,7 @@ class OpenDocument_SpreadSheet implements Iterator, Countable
     public function replaceList($xml, $list, $type = OpenDocument_SpreadSheet_Cell::TYPE_STRING, $direction = 'horizontal')
     {
         $table          = $this->_findParentTable($xml);
-        $sp             = $this->_getStartingPoint($xml, $rows);
+        $sp             = $this->_getStartingPoint($xml);
         $reference      = $sp['reference'];
         $referenceIndex = $sp['referenceIndex'];
         
