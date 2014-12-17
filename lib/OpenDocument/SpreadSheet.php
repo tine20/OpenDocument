@@ -16,7 +16,7 @@
  * @subpackage  OpenDocument
  */
  
-class OpenDocument_SpreadSheet implements Iterator, Countable
+class OpenDocument_SpreadSheet extends OpenDocument_Node implements Iterator, Countable
 {
     const CONTENT_TYPE = 'application/vnd.oasis.opendocument.spreadsheet';
 
@@ -60,7 +60,7 @@ class OpenDocument_SpreadSheet implements Iterator, Countable
     {
         return $this->_spreadSheet;
     }
-    
+
     /**
      * replaces a marker with a matrix
      * 

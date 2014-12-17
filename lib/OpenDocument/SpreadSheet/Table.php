@@ -16,7 +16,7 @@
  * @subpackage  OpenDocument
  */
  
-class OpenDocument_SpreadSheet_Table implements Iterator, Countable
+class OpenDocument_SpreadSheet_Table extends OpenDocument_Node implements Iterator, Countable
 {
     protected $_rows = array();
     
@@ -50,7 +50,7 @@ class OpenDocument_SpreadSheet_Table implements Iterator, Countable
     public function appendRow($_styleName = null)
     {
         $row = OpenDocument_SpreadSheet_Row::createRow($this->_table, $_styleName);
-        
+
         return $row;
     }
     
@@ -63,7 +63,7 @@ class OpenDocument_SpreadSheet_Table implements Iterator, Countable
     public function insertRow($referenceRow, $position = 'after', $styleName = null)
     {
         $row = OpenDocument_SpreadSheet_Row::createRow($this->_table, $styleName, $referenceRow, $position);
-        
+
         return $row;
     }
     
@@ -89,7 +89,9 @@ class OpenDocument_SpreadSheet_Table implements Iterator, Countable
     
         return $row;
     }
-    
+
+
+
     /**
      * creates a table
      * 
@@ -107,8 +109,15 @@ class OpenDocument_SpreadSheet_Table implements Iterator, Countable
             $tableElement->addAttribute('table:style-name', $_styleName, OpenDocument_Document::NS_TABLE);
         }
         
-        $table = new OpenDocument_SpreadSheet_Table($tableElement);
-        
+        $table = new OpenDocument_SpreadSheet_Table($tableElement, $_parent);
+
+        try {
+            self::registerNode($table, self::getNode($_parent));
+        } catch (Exception $e) {
+            // parent might have been created outside our hierarchy
+            // also the spreadsheet table pattern is a mess
+        }
+
         return $table;
     }
     

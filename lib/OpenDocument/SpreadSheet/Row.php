@@ -16,7 +16,7 @@
  * @subpackage  OpenDocument
  */
  
-class OpenDocument_SpreadSheet_Row implements Iterator, Countable
+class OpenDocument_SpreadSheet_Row extends OpenDocument_Node implements Iterator, Countable
 {
     protected $_cells = array();
     
@@ -51,20 +51,17 @@ class OpenDocument_SpreadSheet_Row implements Iterator, Countable
     public function appendCell($_value, $_type = null, $additionalAttributes = array())
     {
         $cell = OpenDocument_SpreadSheet_Cell::createCell($this->_row, $_value, $_type, $additionalAttributes);
+
         return $cell;
     }
     
     public function appendCoveredCell()
     {
         $cell = OpenDocument_SpreadSheet_Cell::createCoveredCell($this->_row);
+
         return $cell;
     }
     
-    public function setStyle($_styleName)
-    {
-        $this->_attributes['table:style-name'] = $_styleName;
-    }
-
     /**
      * 
      * @param SimpleXMLElement $_parent
@@ -95,7 +92,14 @@ class OpenDocument_SpreadSheet_Row implements Iterator, Countable
         }
         
         $row = new self($rowElement);
-        
+
+        try {
+            self::registerNode($row, self::getNode($_parent));
+        } catch (Exception $e) {
+            // parent might have been created outside our hierarchy
+            // also the spreadsheet table pattern is a mess
+        }
+
         return $row;
     }
     

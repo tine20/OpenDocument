@@ -16,8 +16,24 @@
  * @subpackage  OpenDocument
  */
  
-class OpenDocument_SpreadSheet_Column
+class OpenDocument_SpreadSheet_Column extends OpenDocument_Node
 {
+    protected static $_styleFamily = 'table-column';
+
+    protected static $_supportedStyles = array(
+        'border-top'    => array('table-cell-properties', 'fo'),
+        'border-right'  => array('table-cell-properties', 'fo'),
+        'border-bottom' => array('table-cell-properties', 'fo'),
+        'border-left'   => array('table-cell-properties', 'fo'),
+        'column-width'  => array('table-column-properties', 'style'),
+        'text-align'    => array('paragraph-properties', 'fo'),
+        'margin-top'    => array('paragraph-properties', 'fo'),
+        'margin-right'  => array('paragraph-properties', 'fo'),
+        'margin-bottom' => array('paragraph-properties', 'fo'),
+        'margin-left'   => array('paragraph-properties', 'fo'),
+        'font-weight'   => array('text-properties', 'fo'),
+    );
+
     /**
      * 
      * @var SimpleXMLElement
@@ -64,7 +80,14 @@ class OpenDocument_SpreadSheet_Column
         }
         
         $column = new self($columnElement);
-        
+
+        try {
+            self::registerNode($column, self::getNode($_parent));
+        } catch (Exception $e) {
+            // parent might have been created outside our hierarchy
+            // also the spreadsheet table pattern is a mess
+        }
+
         return $column;
     }
 }

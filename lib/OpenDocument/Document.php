@@ -16,7 +16,7 @@
  * @subpackage  OpenDocument
  */
  
-class OpenDocument_Document
+class OpenDocument_Document extends OpenDocument_Node
 {
     const NS_TABLE  = 'urn:oasis:names:tc:opendocument:xmlns:table:1.0';
     const NS_STYLE  = 'urn:oasis:names:tc:opendocument:xmlns:style:1.0';
@@ -190,6 +190,7 @@ class OpenDocument_Document
         }
 
         $this->_document = new SimpleXMLElement($this->_content);
+        self::registerNode($this);
         
         // register namespaces
         $namespaces = $this->_document->getNamespaces(true);
@@ -211,6 +212,8 @@ class OpenDocument_Document
                     $spreadsheet = $spreadsheets[0];
                 }
                 $this->_body = new OpenDocument_SpreadSheet($spreadsheet);
+                self::registerNode($this->_body, $this);
+
                 break;
             default:
                 throw new Exception('unsupported documenttype: ' . $_type);
@@ -330,7 +333,7 @@ class OpenDocument_Document
         }
         return $this;
     }
-    
+
     /**
      * creates the document
      * 
