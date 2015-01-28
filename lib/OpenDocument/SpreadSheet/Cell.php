@@ -41,6 +41,7 @@ class OpenDocument_SpreadSheet_Cell extends OpenDocument_Node
         'margin-bottom'     => array('paragraph-properties', 'fo'),
         'margin-left'       => array('paragraph-properties', 'fo'),
         'font-weight'       => array('text-properties', 'fo'),
+        'font-size'         => array('text-properties', 'fo'),
     );
 
     /**
