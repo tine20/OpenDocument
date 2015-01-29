@@ -31,16 +31,57 @@ class OpenDocument_SpreadSheet_Table extends OpenDocument_Node implements Iterat
      */
     protected $_table;
     
-    public function __construct(SimpleXMLElement $_table)
+    public function __construct(SimpleXMLElement $_table, $_parent = null)
     {
         $this->_table = $_table;
+
+        if ($_parent) {
+            try {
+                self::registerNode($this, self::getNode($_parent));
+            } catch (Exception $e) {
+                // parent might have been created outside our hierarchy
+                // also the spreadsheet table pattern is a mess
+            }
+        }
     }
     
     public function getBody()
     {
         return $this->_table;
     }
-    
+
+    /**
+     * get cont of existing rows
+     *
+     * @return integer
+     */
+    public function getRowCount()
+    {
+        return count($this->_table->xpath("//*/table:table-row"));
+    }
+
+    /**
+     * get existing row by position
+     *
+     * @param integer $position
+     * @return OpenDocument_SpreadSheet_Row|null
+     */
+    public function getRow($position)
+    {
+        if ($position instanceof OpenDocument_SpreadSheet_Row) {
+            return $position;
+        }
+
+        $row = $this->_table->xpath("//*/table:table-row[position()=$position]");
+
+        if (count($row) === 0) {
+            return FALSE;
+        }
+
+        //@TODO try to find row in registry first!
+        return new OpenDocument_SpreadSheet_Row($row[0], $this);
+    }
+
     /**
      * add new row and return reference
      *
@@ -66,7 +107,25 @@ class OpenDocument_SpreadSheet_Table extends OpenDocument_Node implements Iterat
 
         return $row;
     }
-    
+
+    /**
+     * delete given row
+     *
+     * @param integer|OpenDocument_SpreadSheet_Row
+     */
+    public function deleteRow($row)
+    {
+        $row = $this->getRow($row);
+        if (! $row instanceof OpenDocument_SpreadSheet_Row) {
+            throw new Exception('Row does not exists');
+        }
+
+        self::unregisterNode($row);
+        unset($row->getBody()->{0});
+
+
+    }
+
     /**
      * sets the title of the table
      * 
@@ -110,13 +169,6 @@ class OpenDocument_SpreadSheet_Table extends OpenDocument_Node implements Iterat
         }
         
         $table = new OpenDocument_SpreadSheet_Table($tableElement, $_parent);
-
-        try {
-            self::registerNode($table, self::getNode($_parent));
-        } catch (Exception $e) {
-            // parent might have been created outside our hierarchy
-            // also the spreadsheet table pattern is a mess
-        }
 
         return $table;
     }

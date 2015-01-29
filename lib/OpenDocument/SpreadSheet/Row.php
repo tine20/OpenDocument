@@ -40,9 +40,16 @@ class OpenDocument_SpreadSheet_Row extends OpenDocument_Node implements Iterator
         'use-optimal-row-height'    => array('table-row-properties', 'style'),
     );
 
-    public function __construct(SimpleXMLElement $_row)
+    public function __construct(SimpleXMLElement $_row, $_parent = null)
     {
         $this->_row = $_row;
+
+        try {
+            self::registerNode($this, self::getNode($_parent));
+        } catch (Exception $e) {
+            // parent might have been created outside our hierarchy
+            // also the spreadsheet table pattern is a mess
+        }
     }
     
     public function getBody()
@@ -99,14 +106,7 @@ class OpenDocument_SpreadSheet_Row extends OpenDocument_Node implements Iterator
             
         }
         
-        $row = new self($rowElement);
-
-        try {
-            self::registerNode($row, self::getNode($_parent));
-        } catch (Exception $e) {
-            // parent might have been created outside our hierarchy
-            // also the spreadsheet table pattern is a mess
-        }
+        $row = new self($rowElement, $_parent);
 
         return $row;
     }

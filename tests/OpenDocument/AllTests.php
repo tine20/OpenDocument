@@ -27,7 +27,8 @@ class OpenDocument_AllTests
         $suite = new PHPUnit_Framework_TestSuite('All Tests');
         
         $suite->addTestSuite('OpenDocument_DocumentTests');
-        
+        $suite->addTestSuite('OpenDocument_SpreadSheet_TableTests');
+
         return $suite;
     }
 }

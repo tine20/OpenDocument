@@ -316,7 +316,7 @@ class OpenDocument_SpreadSheet extends OpenDocument_Node implements Iterator, Co
         
         foreach ($tables as $table) {
             $attributes = $table->attributes(OpenDocument_Document::NS_TABLE);
-            $result[(string)$attributes['name']] = new OpenDocument_SpreadSheet_Table($table);
+            $result[(string)$attributes['name']] = new OpenDocument_SpreadSheet_Table($table, $this);
         }
         
         return $result;
@@ -353,7 +353,7 @@ class OpenDocument_SpreadSheet extends OpenDocument_Node implements Iterator, Co
             return FALSE;
         }
         
-        return new OpenDocument_SpreadSheet_Table($table[0]);
+        return new OpenDocument_SpreadSheet_Table($table[0], $this);
     }
     
     /**

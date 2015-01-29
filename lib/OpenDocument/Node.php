@@ -103,6 +103,27 @@ abstract class OpenDocument_Node
         }
     }
 
+    public function unregisterNode($node)
+    {
+        $nodeId = array_search($node, self::$_nodes, true);
+        if ($nodeId === false) {
+            throw new Exception('node not registered');
+        }
+        self::$_nodes[$nodeId] = null;
+        self::$_SXElements[$nodeId] = null;
+
+        /*
+        unset(self::$_parents[$nodeId]);
+
+        $parent = self::getParentNode($node);
+        if ($parent) {
+            $parentId = array_search($parent, self::$_nodes, true);
+            unset (self::$_children[array_search($nodeId, self::$_children[$parentId])]);
+        }
+        */
+
+    }
+
     /**
      * get node by id
      *
