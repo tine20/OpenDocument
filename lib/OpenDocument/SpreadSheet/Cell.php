@@ -5,9 +5,8 @@
  * @package     OpenDocument
  * @subpackage  OpenDocument
  * @license     http://framework.zend.com/license/new-bsd     New BSD License
- * @copyright   Copyright (c) 2009 Metaways Infosystems GmbH (http://www.metaways.de)
+ * @copyright   Copyright (c) 2009-2015 Metaways Infosystems GmbH (http://www.metaways.de)
  * @author      Lars Kneschke <l.kneschke@metaways.de>
- * @version     $Id$
  */
 
 /**
@@ -16,7 +15,6 @@
  * @package     OpenDocument
  * @subpackage  OpenDocument
  */
- 
 class OpenDocument_SpreadSheet_Cell extends OpenDocument_Node
 {
     const TYPE_CURRENCY   = 'currency';
@@ -26,9 +24,9 @@ class OpenDocument_SpreadSheet_Cell extends OpenDocument_Node
     const TYPE_PERCENTAGE = 'percentage';
     const TYPE_STRING     = 'string';
     const TYPE_FUNCTION   = 'function';
-
+    
     protected static $_styleFamily = 'table-cell';
-
+    
     protected static $_supportedStyles = array(
         'border-top'        => array('table-cell-properties', 'fo'),
         'border-right'      => array('table-cell-properties', 'fo'),
@@ -42,13 +40,13 @@ class OpenDocument_SpreadSheet_Cell extends OpenDocument_Node
         'margin-left'       => array('paragraph-properties', 'fo'),
         'font-weight'       => array('text-properties', 'fo'),
     );
-
+    
     /**
      * 
      * @var SimpleXMLElement
      */
     protected $_cell;
-
+    
     /**
      * @param SimpleXMLElement              $cell
      */
@@ -67,21 +65,20 @@ class OpenDocument_SpreadSheet_Cell extends OpenDocument_Node
         if ($parent instanceof OpenDocument_SpreadSheet_Row) {
             $parent = $parent->getBody();
         }
-
+        
         $cellElement = $parent->addChild('covered-table-cell', null, OpenDocument_Document::NS_TABLE);
-
+        
         $cell = new OpenDocument_SpreadSheet_Cell($cellElement);
-
+        
         try {
             self::registerNode($cell, self::getNode($parent));
         } catch (Exception $e) {
             // parent might have been created outside our hierarchy
             // also the spreadsheet table pattern is a mess
         }
-
+        
         return $cell;
     }
-    
     
     /**
      * 
@@ -146,7 +143,7 @@ class OpenDocument_SpreadSheet_Cell extends OpenDocument_Node
                     } else {
                         list($value, $currency) = explode(' ', $_value);
                     }
-                    if(isset($currency) && ! empty($$currency)) {
+                    if(!empty($currency)) {
                         $cellElement->addAttribute('office:currency', self::encodeValue($currency), OpenDocument_Document::NS_OFFICE);
                     }
                     $cellElement->addAttribute('office:value', self::encodeValue($value), OpenDocument_Document::NS_OFFICE);
@@ -167,20 +164,20 @@ class OpenDocument_SpreadSheet_Cell extends OpenDocument_Node
             // parent might have been created outside our hierarchy
             // also the spreadsheet table pattern is a mess
         }
-
+        
         return $cell;
     }
-
+    
     public function setFormula($_formula)
     {
         $this->_cell->addAttribute('table:formula', $this->encodeValue('oooc:' . $_formula), OpenDocument_Document::NS_TABLE);
     }
-
+    
     public function setAtttibute($_key, $_value, $_nameSpace)
     {
         $this->_cell->addAttribute($_key, $_value, $_nameSpace);
     }
-
+    
     public function getBody()
     {
         return $this->_cell;
