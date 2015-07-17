@@ -31,7 +31,15 @@ class OpenDocument_SpreadSheet_Row extends OpenDocument_Node implements Iterator
      * @var SimpleXMLElement
      */
     protected $_row;
-    
+
+    protected static $_styleFamily = 'table-row';
+
+    protected static $_supportedStyles = array(
+        'row-height'                => array('table-row-properties', 'style'),
+        'break-before'              => array('table-row-properties', 'fo'),
+        'use-optimal-row-height'    => array('table-row-properties', 'style'),
+    );
+
     public function __construct(SimpleXMLElement $_row)
     {
         $this->_row = $_row;
