@@ -46,11 +46,10 @@ class OpenDocument_SpreadSheet_TableTests extends PHPUnit_Framework_TestCase
     public function testDeleteRow()
     {
         $row = $this->_rowTestTable->getRow(3);
+        $this->assertTrue($row instanceof OpenDocument_SpreadSheet_Row, "did not get row number 3");
+
         $this->_rowTestTable->deleteRow($row);
-
         $this->assertEquals(5, $this->_rowTestTable->getRowCount());
-
-
         $this->assertEquals(null, OpenDocument_Node::getNodeId($row->getBody()));
     }
 }

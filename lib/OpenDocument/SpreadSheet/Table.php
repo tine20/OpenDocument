@@ -121,9 +121,7 @@ class OpenDocument_SpreadSheet_Table extends OpenDocument_Node implements Iterat
         }
 
         self::unregisterNode($row);
-        unset($row->getBody()->{0});
-
-
+        $row->delete();
     }
 
     /**

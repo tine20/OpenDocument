@@ -122,6 +122,12 @@ class OpenDocument_SpreadSheet_Row extends OpenDocument_Node implements Iterator
             $cell->generateXML($row);
         }
     }
+
+    public function delete()
+    {
+        $dom = dom_import_simplexml($this->_row);
+        $dom->parentNode->removeChild($dom);
+    }
     
     function rewind() {
         $this->_position = 0;
