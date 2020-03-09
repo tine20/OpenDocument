@@ -68,10 +68,11 @@ class OpenDocument_Matrix_List implements IteratorAggregate, Countable
     {
         $this->_info      = $info;
         $this->_valueType = $valueType;
+        $this->_indexIdMapping = [];
         
         if ($info !== NULL) {
             foreach ($this->_info as $id => $title) {
-                $_this->_indexIdMapping[] = $id;
+                $this->_indexIdMapping[] = $id;
                 $this->_list[$id] = (isset($data[$id]) ? $data[$id] : ($this->_valueType == self::TYPE_FLOAT ? 0 : ''));
             }
         } else {
