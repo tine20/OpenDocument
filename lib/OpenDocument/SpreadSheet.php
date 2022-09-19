@@ -88,7 +88,7 @@ class OpenDocument_SpreadSheet extends OpenDocument_Node implements Iterator, Co
         if ($showSums && $showLegend) {
             $row = OpenDocument_SpreadSheet_Row::createRow($table, null, $reference, $referenceIndex, 'after');
             $row->appendCell('', OpenDocument_SpreadSheet_Cell::TYPE_STRING);
-            $row->appendCell(_('Sum'), OpenDocument_SpreadSheet_Cell::TYPE_STRING, array('table:style-name' => "cell-header"));
+            $row->appendCell('Sum', OpenDocument_SpreadSheet_Cell::TYPE_STRING, array('table:style-name' => "cell-header"));
             
             $index = 0;
             foreach ($matrix->getRowInfo() as $id => $title) {
@@ -170,7 +170,7 @@ class OpenDocument_SpreadSheet extends OpenDocument_Node implements Iterator, Co
             // show vertical sums
             if ($showSums) {
                 $row->appendCell('', OpenDocument_SpreadSheet_Cell::TYPE_STRING);
-                $row->appendCell(_('Sum'), OpenDocument_SpreadSheet_Cell::TYPE_STRING, array('table:style-name' => "cell-header"));
+                $row->appendCell('Sum', OpenDocument_SpreadSheet_Cell::TYPE_STRING, array('table:style-name' => "cell-header"));
             }
         }
         
@@ -369,27 +369,29 @@ class OpenDocument_SpreadSheet extends OpenDocument_Node implements Iterator, Co
         return $table;
     }
     
-    function rewind() {
+    function rewind(): void {
         $this->_position = 0;
     }
 
+    #[\ReturnTypeWillChange]
     function current() {
         return $this->_tables[$this->_position];
     }
 
+    #[\ReturnTypeWillChange]
     function key() {
         return $this->_position;
     }
 
-    function next() {
+    function next(): void {
         ++$this->_position;
     }
 
-    function valid() {
+    function valid(): bool {
         return isset($this->_tables[$this->_position]);
     }
     
-    public function count()
+    public function count(): int
     {
         return count($this->_tables);
     }

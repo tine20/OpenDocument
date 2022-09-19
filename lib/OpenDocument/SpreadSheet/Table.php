@@ -171,27 +171,29 @@ class OpenDocument_SpreadSheet_Table extends OpenDocument_Node implements Iterat
         return $table;
     }
     
-    function rewind() {
+    function rewind(): void {
         $this->_position = 0;
     }
 
+    #[\ReturnTypeWillChange]
     function current() {
         return $this->_rows[$this->_position];
     }
 
+    #[\ReturnTypeWillChange]
     function key() {
         return $this->_position;
     }
 
-    function next() {
+    function next(): void {
         ++$this->_position;
     }
 
-    function valid() {
+    function valid(): bool {
         return isset($this->_rows[$this->_position]);
     }
     
-    public function count()
+    public function count(): int
     {
         return count($this->_rows);
     }

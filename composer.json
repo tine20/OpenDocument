@@ -6,11 +6,18 @@
     "homepage": "http://www.tine20.org",
     "license" : ["New BSD License"],
     "require": {
-        "php": ">=7.0.0"
+        "php": "7.4 - 8.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8.5"
     },
     "autoload": {
         "psr-0": {
             "OpenDocument": ["lib/", "tests/"]
         }
+    },
+    "scripts": {
+        "php8test": "cd tests/docker; docker-compose run cli8 ash -c 'cd /src/tests; ../vendor/bin/phpunit --color OpenDocument/AllTests.php'; cd ../..;",
+        "php81test": "cd tests/docker; docker-compose run cli81 ash -c 'cd /src/tests; ../vendor/bin/phpunit --color OpenDocument/AllTests.php'; cd ../..;"
     }
 }

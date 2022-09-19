@@ -191,7 +191,7 @@ class OpenDocument_Matrix implements IteratorAggregate, Countable
      * 
      * @return number
      */
-    public function count()
+    public function count(): int
     {
         return count($this->_matrix);
     }
@@ -201,7 +201,7 @@ class OpenDocument_Matrix implements IteratorAggregate, Countable
      *
      * @return ArrayIterator
     */
-    public function getIterator() {
+    public function getIterator(): \Traversable {
         return new ArrayIterator($this->_matrix);
     }
     

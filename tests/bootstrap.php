@@ -1,5 +1,3 @@
 <?php
 // initialize composers autoloader
-$loader = require dirname(dirname(__FILE__)) . DIRECTORY_SEPARATOR . 'vendor'. DIRECTORY_SEPARATOR .'autoload.php';
-
-$loader->register();
+require dirname(__DIR__) . DIRECTORY_SEPARATOR . 'vendor'. DIRECTORY_SEPARATOR .'autoload.php';
