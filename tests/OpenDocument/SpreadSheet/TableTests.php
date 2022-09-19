@@ -4,14 +4,14 @@
  *
  * @package     Document
  * @license     http://www.gnu.org/licenses/agpl.html
- * @copyright   Copyright (c) 2015 Metaways Infosystems GmbH (http://www.metaways.de)
+ * @copyright   Copyright (c) 2015-2022 Metaways Infosystems GmbH (http://www.metaways.de)
  * @author      Cornelius Weiß <c.weiss@metaways.de>
  */
 
 /**
  * Test class for OpenDocument_SpreadSheet_TableTests
  */
-class OpenDocument_SpreadSheet_TableTests extends PHPUnit_Framework_TestCase
+class OpenDocument_SpreadSheet_TableTests extends \PHPUnit\Framework\TestCase
 {
 
     /**
@@ -19,7 +19,7 @@ class OpenDocument_SpreadSheet_TableTests extends PHPUnit_Framework_TestCase
      */
     protected $_rowTestTable;
 
-    public function setup()
+    public function setup(): void
     {
         $document = new OpenDocument_Document(OpenDocument_Document::SPREADSHEET, __DIR__ . '/../documents/TableTest.ods');
         $spreadSheet = $document->getBody();

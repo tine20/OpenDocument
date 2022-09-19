@@ -4,27 +4,15 @@
  *
  * @package     Document
  * @license     http://www.gnu.org/licenses/agpl.html
- * @copyright   Copyright (c) 2013 Metaways Infosystems GmbH (http://www.metaways.de)
+ * @copyright   Copyright (c) 2013-2022 Metaways Infosystems GmbH (http://www.metaways.de)
  * @author      Alexander Stintzing <a.stintzing@metaways.de>
  */
 
 /**
  * Test class for OpenDocument
  */
-class OpenDocument_DocumentTests extends PHPUnit_Framework_TestCase
+class OpenDocument_DocumentTests extends \PHPUnit\Framework\TestCase
 {
-    /**
-     * Runs the test methods of this class.
-     *
-     * @access public
-     * @static
-     */
-    public static function main()
-    {
-        $suite  = new PHPUnit_Framework_TestSuite('OpenDocument Document Tests');
-        PHPUnit_TextUI_TestRunner::run($suite);
-    }
-    
     /**
      * tests the correct replacement of markers with different contents
      */
