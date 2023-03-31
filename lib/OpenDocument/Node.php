@@ -280,7 +280,7 @@ abstract class OpenDocument_Node
      */
     static public function encodeValue($value)
     {
-        return htmlspecialchars($value, ENT_NOQUOTES, 'UTF-8');
+        return htmlspecialchars($value, ENT_COMPAT, 'UTF-8');
     }
 
     /**

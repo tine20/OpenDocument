@@ -153,7 +153,9 @@ class OpenDocument_SpreadSheet_Cell extends OpenDocument_Node
             if ($_type == self::TYPE_FUNCTION) {
                 
             } elseif ($_type != self::TYPE_CURRENCY && $_type != self::TYPE_PERCENTAGE) {
-                $cellElement->addChild('p', self::encodeValue($_value), OpenDocument_Document::NS_TEXT);
+                foreach (explode("\n", str_replace("\r\n", "\n", $_value)) as $val) {
+                    $cellElement->addChild('p', self::encodeValue($val), OpenDocument_Document::NS_TEXT);
+                }
             }
         }
         
