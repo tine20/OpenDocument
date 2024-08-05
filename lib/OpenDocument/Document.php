@@ -58,6 +58,8 @@ class OpenDocument_Document extends OpenDocument_Node
      * @var string
      */
     protected $_type;
+
+    protected $_tmpdir;
     
     /**
      * the content.xml as text
