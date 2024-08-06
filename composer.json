@@ -6,7 +6,7 @@
     "homepage": "http://www.tine20.org",
     "license" : ["New BSD License"],
     "require": {
-        "php": "7.4 - 8.1"
+        "php": "8.1 - 8.2"
     },
     "require-dev": {
         "phpunit/phpunit": "^8.5"
